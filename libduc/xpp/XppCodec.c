@@ -22,7 +22,7 @@
 #include <HalideRuntime.h>
 #endif
 
-#define TAG "NowCodec"
+#define TAG "XppCodec"
 
 #ifdef WITH_HALIDE
 
@@ -74,7 +74,7 @@ void codec_setup_1d_u8_buffer_t(buffer_t* buffer, uint8_t* data, int width)
 	buffer->host_dirty = true;
 }
 
-int NowCodec_Copy_halide(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst,
+int XppCodec_Copy_halide(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst,
 	int nWidth, int nHeight, uint8_t* pSrcData, int nSrcStep, int nXSrc, int nYSrc)
 {
 	buffer_t input;
@@ -90,7 +90,7 @@ int NowCodec_Copy_halide(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst,
 	return 0;
 }
 
-int NowCodec_Compare32_halide(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
+int XppCodec_Compare32_halide(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
 			      DUC_EDGE_RECT* rect)
 {
 	int i;
@@ -131,7 +131,7 @@ int NowCodec_Compare32_halide(uint8_t* pData1, int step1, uint8_t* pData2, int s
 	return 0;
 }
 
-int NowCodec_Compare8_halide(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
+int XppCodec_Compare8_halide(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
 			     DUC_EDGE_RECT* rect)
 {
 	int i;
@@ -174,7 +174,7 @@ int NowCodec_Compare8_halide(uint8_t* pData1, int step1, uint8_t* pData2, int st
 
 #endif
 
-int NowCodec_Copy_c(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst, int nWidth, int nHeight, uint8_t* pSrcData,
+int XppCodec_Copy_c(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst, int nWidth, int nHeight, uint8_t* pSrcData,
 		    int nSrcStep, int nXSrc, int nYSrc)
 {
 	int y;
@@ -200,14 +200,14 @@ int NowCodec_Copy_c(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst, int n
 	return 1;
 }
 
-int NowCodec_Copy(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst, int nWidth, int nHeight, uint8_t* pSrcData,
+int XppCodec_Copy(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst, int nWidth, int nHeight, uint8_t* pSrcData,
 		  int nSrcStep, int nXSrc, int nYSrc)
 {
-	NowPrimitives* primitives = NowPrimitives_Get();
+	XppPrimitives* primitives = XppPrimitives_Get();
 	return primitives->Copy(pDstData, nDstStep, nXDst, nYDst, nWidth, nHeight, pSrcData, nSrcStep, nXSrc, nYSrc);
 }
 
-int NowCodec_Move_c(uint8_t* pData, int nStep, int nXDst, int nYDst, int nWidth, int nHeight, int nXSrc, int nYSrc)
+int XppCodec_Move_c(uint8_t* pData, int nStep, int nXDst, int nYDst, int nWidth, int nHeight, int nXSrc, int nYSrc)
 {
 	uint8_t* pSrcPixel;
 	uint8_t* pDstPixel;
@@ -219,7 +219,7 @@ int NowCodec_Move_c(uint8_t* pData, int nStep, int nXDst, int nYDst, int nWidth,
 	pDstPixel = &pData[((nYDst + nHeight - 1) * nStep) + (nXDst * 4)];
 
 	if (pSrcPixel > pDstPixel)
-		return NowCodec_Copy_c(pData, nStep, nXDst, nYDst, nWidth, nHeight, pData,
+		return XppCodec_Copy_c(pData, nStep, nXDst, nYDst, nWidth, nHeight, pData,
 			nStep, nXSrc, nYSrc);
 
 	while (nHeight--)
@@ -232,13 +232,13 @@ int NowCodec_Move_c(uint8_t* pData, int nStep, int nXDst, int nYDst, int nWidth,
 	return 1;
 }
 
-int NowCodec_Move(uint8_t* pData, int nStep, int nXDst, int nYDst, int nWidth, int nHeight, int nXSrc, int nYSrc)
+int XppCodec_Move(uint8_t* pData, int nStep, int nXDst, int nYDst, int nWidth, int nHeight, int nXSrc, int nYSrc)
 {
-	NowPrimitives* primitives = NowPrimitives_Get();
+	XppPrimitives* primitives = XppPrimitives_Get();
 	return primitives->Move(pData, nStep, nXDst, nYDst, nWidth, nHeight, nXSrc, nYSrc);
 }
 
-int NowCodec_CopyFromRetina_c(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst, int nWidth, int nHeight,
+int XppCodec_CopyFromRetina_c(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst, int nWidth, int nHeight,
 			      uint8_t* pSrcData, int nSrcStep, int nXSrc, int nYSrc)
 {
 	int x, y;
@@ -284,15 +284,15 @@ int NowCodec_CopyFromRetina_c(uint8_t* pDstData, int nDstStep, int nXDst, int nY
 	return 1;
 }
 
-int NowCodec_CopyFromRetina(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst, int nWidth, int nHeight,
+int XppCodec_CopyFromRetina(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst, int nWidth, int nHeight,
 			    uint8_t* pSrcData, int nSrcStep, int nXSrc, int nYSrc)
 {
-	NowPrimitives* primitives = NowPrimitives_Get();
+	XppPrimitives* primitives = XppPrimitives_Get();
 	return primitives->CopyFromRetina(pDstData, nDstStep, nXDst, nYDst, nWidth, nHeight, pSrcData, nSrcStep, nXSrc,
 					  nYSrc);
 }
 
-int NowCodec_Compare32_c(uint8_t* pData1, int step1, uint8_t* pData2,
+int XppCodec_Compare32_c(uint8_t* pData1, int step1, uint8_t* pData2,
 	int step2, int width, int height, DUC_EDGE_RECT* rect)
 {
 	bool equal;
@@ -399,14 +399,14 @@ int NowCodec_Compare32_c(uint8_t* pData1, int step1, uint8_t* pData2,
 	return 1;
 }
 
-int NowCodec_Compare32(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
+int XppCodec_Compare32(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
 		       DUC_EDGE_RECT* rect)
 {
-	NowPrimitives* primitives = NowPrimitives_Get();
+	XppPrimitives* primitives = XppPrimitives_Get();
 	return primitives->Compare32(pData1, step1, pData2, step2, width, height, rect);
 }
 
-int NowCodec_Compare8_c(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
+int XppCodec_Compare8_c(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
 			DUC_EDGE_RECT* rect)
 {
 	int x, y;
@@ -515,15 +515,15 @@ int NowCodec_Compare8_c(uint8_t* pData1, int step1, uint8_t* pData2, int step2, 
 	return 1;
 }
 
-int NowCodec_Compare8(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
+int XppCodec_Compare8(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
 		      DUC_EDGE_RECT* rect)
 {
-	NowPrimitives* primitives = NowPrimitives_Get();
+	XppPrimitives* primitives = XppPrimitives_Get();
 	return primitives->Compare8(pData1, step1, pData2, step2, width, height, rect);
 }
 
-int NowCodec_Compare(uint8_t* pData1, int nStep1, int nWidth, int nHeight, uint8_t* pData2, int nStep2,
+int XppCodec_Compare(uint8_t* pData1, int nStep1, int nWidth, int nHeight, uint8_t* pData2, int nStep2,
 		     DUC_EDGE_RECT* rect)
 {
-	return NowCodec_Compare32(pData1, nStep1, pData2, nStep2, nWidth, nHeight, rect);
+	return XppCodec_Compare32(pData1, nStep1, pData2, nStep2, nWidth, nHeight, rect);
 }

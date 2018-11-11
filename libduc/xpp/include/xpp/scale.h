@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-DUC_EXPORT int NowXpp_Scale_8u_C4R(const uint8_t* pSrc, int srcStep, int srcWidth, int srcHeight, uint8_t* pDst,
+DUC_EXPORT int XppXpp_Scale_8u_C4R(const uint8_t* pSrc, int srcStep, int srcWidth, int srcHeight, uint8_t* pDst,
 				   int dstStep, int dstWidth, int dstHeight, int mode);
 
 #ifdef __cplusplus

@@ -87,8 +87,7 @@ target_link_libraries(${MODULE_NAME} ${${MODULE_PREFIX}_LIBS})
 
 if(WAYK_INSTALL)
 	install(TARGETS ${MODULE_NAME}
-		EXPORT wayk-targets
+		EXPORT duc-targets
 		ARCHIVE DESTINATION lib
 		LIBRARY DESTINATION lib)
 endif()
-

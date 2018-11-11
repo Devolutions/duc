@@ -1,5 +1,5 @@
-#ifndef WAYK_NOW_MATH_H
-#define WAYK_NOW_MATH_H
+#ifndef DUC_XPP_MATH_H
+#define DUC_XPP_MATH_H
 
 #include <xpp/xpp.h>
 
@@ -29,5 +29,4 @@ extern "C" {
 }
 #endif
 
-#endif /* WAYK_NOW_MATH_H */
-
+#endif /* DUC_XPP_MATH_H */

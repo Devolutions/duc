@@ -1,7 +1,7 @@
 
 #include <xpp/color.h>
 
-#define WAYK_SIMD_INTERNAL
+#define XPP_SIMD_INTERNAL
 #include "simd.h"
 #include <arm_neon.h>
 
@@ -44,7 +44,7 @@
 	if (_val < _min) _val = _min; \
 	else if (_val > _max) _val = _max;
 
-void NowColor_YCoCgR420ToRGB_8u_P3AC4R_simd(const uint8_t* pSrc[3],
+void XppColor_YCoCgR420ToRGB_8u_P3AC4R_simd(const uint8_t* pSrc[3],
 	int srcStep[3], uint8_t* pDst, int dstStep, int width, int height)
 {
 	uint32_t x;
@@ -252,8 +252,8 @@ static __inline int16x8_t __attribute__((__always_inline__))
 	vst1q_u8(pY, vcombine_u8(vqmovun_s16(yl), vqmovun_s16(yh)));  \
 }
 
-void NowColor_RGBToYCoCgR420_8u_P3AC4R_simd(const uint8_t* pSrc, INT32 srcStep,
-	uint8_t* pDst[3], INT32 dstStep[3], int width, int height)
+void XppColor_RGBToYCoCgR420_8u_P3AC4R_simd(const uint8_t* pSrc, int32_t srcStep,
+	uint8_t* pDst[3], int32_t dstStep[3], int width, int height)
 {
 	uint32_t x;
 	uint32_t srcPad;

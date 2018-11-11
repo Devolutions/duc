@@ -3,7 +3,7 @@
 
 #include <xpp/math.h>
 
-#define WAYK_SIMD_INTERNAL
+#define XPP_SIMD_INTERNAL
 #include "simd.h"
 
 #if defined(_M_IX86) || defined(_M_AMD64)

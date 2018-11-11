@@ -1,7 +1,7 @@
 
 #include <xpp/codec.h>
 
-#define WAYK_SIMD_INTERNAL
+#define XPP_SIMD_INTERNAL
 #include "simd.h"
 #include "emmintrin.h"
 
@@ -116,7 +116,7 @@
 	}  \
 }
 
-int NowCodec_Copy_simd(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst,
+int XppCodec_Copy_simd(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst,
 	int nWidth, int nHeight, uint8_t* pSrcData, int nSrcStep, int nXSrc, int nYSrc)
 {
 	int x;
@@ -291,7 +291,7 @@ int NowCodec_Copy_simd(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst,
 	}  \
 }
 
-int NowCodec_Move_simd(uint8_t* pData, int nStep, int nXDst, int nYDst,
+int XppCodec_Move_simd(uint8_t* pData, int nStep, int nXDst, int nYDst,
 	int nWidth, int nHeight, int nXSrc, int nYSrc)
 {
 	int x;
@@ -310,7 +310,7 @@ int NowCodec_Move_simd(uint8_t* pData, int nStep, int nXDst, int nYDst,
 
 	if (pSrcPixel > pDstPixel)
 	{
-		/* NOTE: this is essentially what NowCodec_Copy_simd() does, but since
+		/* NOTE: this is essentially what XppCodec_Copy_simd() does, but since
 		   that algorithm is designed for copying blocks between different images,
 		   it uses non-temporal move instructions to bypass the cache when copying
 		   large blocks.  The Move algorithm is intended for moving blocks within
@@ -375,7 +375,7 @@ int NowCodec_Move_simd(uint8_t* pData, int nStep, int nXDst, int nYDst,
 	sumh = _mm_add_epi16(sumh, xmm1);  \
 }
 
-int NowCodec_CopyFromRetina_simd(uint8_t* pDstData, int nDstStep, int nXDst,
+int XppCodec_CopyFromRetina_simd(uint8_t* pDstData, int nDstStep, int nXDst,
 	int nYDst, int nWidth, int nHeight, uint8_t* pSrcData, int nSrcStep, int nXSrc,
 	int nYSrc)
 {
@@ -459,7 +459,7 @@ int NowCodec_CopyFromRetina_simd(uint8_t* pDstData, int nDstStep, int nXDst,
 	}  \
 }
 
-int NowCodec_Compare32_simd(uint8_t* pData1, int step1, uint8_t* pData2, int step2,
+int XppCodec_Compare32_simd(uint8_t* pData1, int step1, uint8_t* pData2, int step2,
 	int width, int height, DUC_EDGE_RECT* rect)
 {
 	bool allEqual;
@@ -613,7 +613,7 @@ int NowCodec_Compare32_simd(uint8_t* pData1, int step1, uint8_t* pData2, int ste
 	}  \
 }
 
-int NowCodec_Compare32_simd(uint8_t* pData1, int step1, uint8_t* pData2, int step2,
+int XppCodec_Compare32_simd(uint8_t* pData1, int step1, uint8_t* pData2, int step2,
 	int width, int height, DUC_EDGE_RECT* rect)
 {
 	bool equal;
@@ -781,7 +781,7 @@ int NowCodec_Compare32_simd(uint8_t* pData1, int step1, uint8_t* pData2, int ste
 	}  \
 }
 
-int NowCodec_Compare8_simd(uint8_t* pData1, int step1, uint8_t* pData2, int step2,
+int XppCodec_Compare8_simd(uint8_t* pData1, int step1, uint8_t* pData2, int step2,
 	int width, int height, DUC_EDGE_RECT* rect)
 {
 	int x, y;

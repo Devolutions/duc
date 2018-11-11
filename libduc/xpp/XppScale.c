@@ -8,7 +8,7 @@
 
 #include <libyuv/libyuv.h>
 
-static FilterModeEnum NowXpp_GetLibYuvFilterMode(int mode)
+static FilterModeEnum XppXpp_GetLibYuvFilterMode(int mode)
 {
 	switch (mode)
 	{
@@ -27,14 +27,14 @@ static FilterModeEnum NowXpp_GetLibYuvFilterMode(int mode)
 
 #endif
 
-int NowXpp_Scale_8u_C4R(const uint8_t* pSrc, int srcStep, int srcWidth, int srcHeight, uint8_t* pDst, int dstStep,
+int XppXpp_Scale_8u_C4R(const uint8_t* pSrc, int srcStep, int srcWidth, int srcHeight, uint8_t* pDst, int dstStep,
 			int dstWidth, int dstHeight, int mode)
 {
 	int status = -1;
 
 #ifdef WITH_LIBYUV
 	status = ARGBScale(pSrc, srcStep, srcWidth, srcHeight, pDst, dstStep, dstWidth, dstHeight,
-			   NowXpp_GetLibYuvFilterMode(mode));
+			   XppXpp_GetLibYuvFilterMode(mode));
 #endif
 
 	return status;

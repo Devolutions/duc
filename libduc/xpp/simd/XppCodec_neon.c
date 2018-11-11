@@ -1,7 +1,7 @@
 
 #include <xpp/codec.h>
 
-#define WAYK_SIMD_INTERNAL
+#define XPP_SIMD_INTERNAL
 #include "simd.h"
 #include <arm_neon.h>
 
@@ -59,7 +59,7 @@
 
 #define COPY1()  \
 {  \
-	*(UINT32 *)pDstPixel = *(UINT32 *)pSrcPixel;  \
+	*(uint32_t *)pDstPixel = *(uint32_t *)pSrcPixel;  \
 	pSrcPixel += 4;  \
 	pDstPixel += 4;  \
 }
@@ -113,7 +113,7 @@
 
 #if !defined(__ANDROID__)
 
-int NowCodec_Copy_simd(BYTE* pDstData, int nDstStep, int nXDst, int nYDst,
+int XppCodec_Copy_simd(BYTE* pDstData, int nDstStep, int nXDst, int nYDst,
 	int nWidth, int nHeight, BYTE* pSrcData, int nSrcStep, int nXSrc, int nYSrc)
 {
 	int x;
@@ -205,7 +205,7 @@ int NowCodec_Copy_simd(BYTE* pDstData, int nDstStep, int nXDst, int nYDst,
 {  \
 	pSrcPixel -= 4;  \
 	pDstPixel -= 4;  \
-	*(UINT32 *)pDstPixel = *(UINT32 *)pSrcPixel;  \
+	*(uint32_t *)pDstPixel = *(uint32_t *)pSrcPixel;  \
 }
 
 #define MOVE_REMAINDER()  \
@@ -256,7 +256,7 @@ int NowCodec_Copy_simd(BYTE* pDstData, int nDstStep, int nXDst, int nYDst,
 	}  \
 }
 
-int NowCodec_Move_simd(BYTE* pData, int nStep, int nXDst, int nYDst,
+int XppCodec_Move_simd(BYTE* pData, int nStep, int nXDst, int nYDst,
 	int nWidth, int nHeight, int nXSrc, int nYSrc)
 {
 	int x;
@@ -319,14 +319,14 @@ int NowCodec_Move_simd(BYTE* pData, int nStep, int nXDst, int nYDst,
 	sumh = vaddq_u16(sumh, srcoh);  \
 }
 
-int NowCodec_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
+int XppCodec_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
 	int nYDst, int nWidth, int nHeight, BYTE* pSrcData, int nSrcStep, int nXSrc,
 	int nYSrc)
 {
 	int x;
 	int nSrcPad;
 	int nDstPad;
-	UINT32 R, G, B;
+	uint32_t R, G, B;
 	BYTE* pSrcPixel;
 	BYTE* pDstPixel;
 	uint32x4_t src0, src1;
@@ -418,7 +418,7 @@ int NowCodec_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
 	}  \
 }
 
-int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
+int XppCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	int width, int height, DUC_EDGE_RECT* rect)
 {
 	bool allEqual;
@@ -629,7 +629,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 }
 
 
-int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
+int XppCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	int width, int height, DUC_EDGE_RECT* rect)
 {
 	bool equal;
@@ -784,7 +784,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 
 #if !defined(__APPLE__) || !defined(__aarch64__)
 
-int NowCodec_Compare8_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
+int XppCodec_Compare8_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	int width, int height, DUC_EDGE_RECT* rect)
 {
 	int x, y;
@@ -792,7 +792,7 @@ int NowCodec_Compare8_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	int l, r, t, b;
 	BYTE* p1 = pData1;
 	BYTE* p2 = pData2;
-	UINT32 cmp[4];
+	uint32_t cmp[4];
 	uint32x4_t q0, q1, q2;
 
 	l = width + 1;

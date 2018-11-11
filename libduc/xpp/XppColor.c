@@ -59,7 +59,7 @@ void setup_ycocg_buffer_t(buffer_t* buffer, uint8_t* data, int width, int height
 	buffer->host_dirty = true;
 }
 
-void NowColor_Halide_RGBToYCoCgR420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3],
+void XppColor_Halide_RGBToYCoCgR420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3],
 					      int32_t dstStep[3], int width, int height)
 {
 	buffer_t inRgb;
@@ -75,7 +75,7 @@ void NowColor_Halide_RGBToYCoCgR420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcSt
 	RgbToYCoCgR420_old_buffer_t(&inRgb, &outY, &outCo, &outCg);
 }
 
-void NowColor_Halide_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep,
+void XppColor_Halide_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep,
 					      int width, int height)
 {
 	buffer_t outRgb;
@@ -95,15 +95,15 @@ void NowColor_Halide_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcSte
 
 #ifdef WITH_CODEC_SIMD
 
-void NowColor_SSE2_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep,
+void XppColor_SSE2_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep,
 					    int width, int height)
 {
-	NowColor_YCoCgR420ToRGB_8u_P3AC4R_simd(pSrc, srcStep, pDst, dstStep, width, height);
+	XppColor_YCoCgR420ToRGB_8u_P3AC4R_simd(pSrc, srcStep, pDst, dstStep, width, height);
 }
 
 #endif
 
-void NowColor_YUV420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
+void XppColor_YUV420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
 				    int height)
 {
 	int x, y;
@@ -329,7 +329,7 @@ void NowColor_YUV420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint
 	}
 }
 
-void NowColor_RGBToYUV420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
+void XppColor_RGBToYUV420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
 				    int width, int height)
 {
 	int x, y;
@@ -428,7 +428,7 @@ void NowColor_RGBToYUV420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_
 	}
 }
 
-void NowColor_YCoCgR420ToRGB_8u_P3AC4R_c(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
+void XppColor_YCoCgR420ToRGB_8u_P3AC4R_c(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
 					 int height)
 {
 	uint32_t x, y;
@@ -553,7 +553,7 @@ void NowColor_YCoCgR420ToRGB_8u_P3AC4R_c(const uint8_t* pSrc[3], int srcStep[3],
 	}
 }
 
-void NowColor_RGBToYCoCgR420_8u_P3AC4R_c(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
+void XppColor_RGBToYCoCgR420_8u_P3AC4R_c(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
 					 int width, int height)
 {
 	uint32_t x, y;
@@ -668,21 +668,21 @@ void NowColor_RGBToYCoCgR420_8u_P3AC4R_c(const uint8_t* pSrc, int32_t srcStep, u
 	}
 }
 
-void NowColor_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
+void XppColor_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
 				       int height)
 {
-	NowPrimitives* primitives = NowPrimitives_Get();
+	XppPrimitives* primitives = XppPrimitives_Get();
 	primitives->YCoCgR420ToRGB_8u_P3AC4R(pSrc, srcStep, pDst, dstStep, width, height);
 }
 
-void NowColor_RGBToYCoCgR420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
+void XppColor_RGBToYCoCgR420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
 				       int width, int height)
 {
-	NowPrimitives* primitives = NowPrimitives_Get();
+	XppPrimitives* primitives = XppPrimitives_Get();
 	primitives->RGBToYCoCgR420_8u_P3AC4R(pSrc, srcStep, pDst, dstStep, width, height);
 }
 
-void NowColor_RGBToYCoCgR420_8u_P3AC4R_ds2x(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
+void XppColor_RGBToYCoCgR420_8u_P3AC4R_ds2x(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
 					    int width, int height)
 {
 	uint32_t x, y;
@@ -823,7 +823,7 @@ void NowColor_RGBToYCoCgR420_8u_P3AC4R_ds2x(const uint8_t* pSrc, int32_t srcStep
 
 /* YCoCgR */
 
-void NowColor_YCoCgRToRGB_16s_P3AC4R(const int16_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
+void XppColor_YCoCgRToRGB_16s_P3AC4R(const int16_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
 				     int height)
 {
 	int x, y;
@@ -948,7 +948,7 @@ void NowColor_YCoCgRToRGB_16s_P3AC4R(const int16_t* pSrc[3], int srcStep[3], uin
 	}
 }
 
-void NowColor_RGBToYCoCgR_16s_P3AC4R(const uint8_t* pSrc, int32_t srcStep, int16_t* pDst[3], int32_t dstStep[3],
+void XppColor_RGBToYCoCgR_16s_P3AC4R(const uint8_t* pSrc, int32_t srcStep, int16_t* pDst[3], int32_t dstStep[3],
 				     int width, int height)
 {
 	int x, y;
@@ -1069,7 +1069,7 @@ void NowColor_RGBToYCoCgR_16s_P3AC4R(const uint8_t* pSrc, int32_t srcStep, int16
 	}
 }
 
-void NowColor_MultiplyAlpha(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst, int32_t dstStep, int width, int height)
+void XppColor_MultiplyAlpha(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst, int32_t dstStep, int width, int height)
 {
 	int x, y;
 	int srcPad;
@@ -1096,7 +1096,7 @@ void NowColor_MultiplyAlpha(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst,
 	}
 }
 
-void NowColor_UnmultiplyAlpha(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst, int32_t dstStep, int width,
+void XppColor_UnmultiplyAlpha(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst, int32_t dstStep, int width,
 			      int height)
 {
 	int x, y;
