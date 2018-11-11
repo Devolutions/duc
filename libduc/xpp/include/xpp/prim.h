@@ -11,9 +11,9 @@
 #define NOW_PRIMITIVES_ALL      0x7
 
 typedef int(*fnNowPrimitivesCompare32)(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
-				       NOW_EDGE_RECT* rect);
+				       DUC_EDGE_RECT* rect);
 typedef int(*fnNowPrimitivesCompare8)(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
-				      NOW_EDGE_RECT* rect);
+				      DUC_EDGE_RECT* rect);
 typedef int(*fnNowPrimitivesCopy)(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst, int nWidth, int nHeight,
 				  uint8_t* pSrcData, int nSrcStep, int nXSrc, int nYSrc);
 typedef int(*fnNowPrimitivesMove)(uint8_t* pData, int nStep, int nXDst, int nYDst, int nWidth, int nHeight, int nXSrc,

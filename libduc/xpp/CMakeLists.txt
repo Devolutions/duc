@@ -7,12 +7,13 @@ include_directories(include)
 set(${MODULE_PREFIX}_HEADERS "")
 
 set(${MODULE_PREFIX}_SOURCES
-	NowCodec.c
-	NowColor.c
-	NowScale.c
-	NowPrimitives.c)
+	XppCodec.c
+	XppColor.c
+	XppScale.c
+	XppPrim.c)
 
 if(WITH_HALIDE)
+	include(WaykSDK.cmake)
 	add_subdirectory(halide)
 	list(APPEND ${MODULE_PREFIX}_HEADERS ${HALIDE_GENERATED_HEADERS})
 	list(APPEND ${MODULE_PREFIX}_SOURCES ${HALIDE_GENERATED_OBJECTS})

@@ -1,4 +1,5 @@
-#include <Wayk/NowColor.h>
+
+#include <xpp/color.h>
 
 #define WAYK_SIMD_INTERNAL
 #include "simd.h"
@@ -100,25 +101,25 @@
 	if (_val < _min) _val = _min; \
 	else if (_val > _max) _val = _max;
 
-void NowColor_YCoCgR420ToRGB_8u_P3AC4R_simd(const BYTE* pSrc[3],
-	int srcStep[3], BYTE* pDst, int dstStep, int width, int height)
+void NowColor_YCoCgR420ToRGB_8u_P3AC4R_simd(const uint8_t* pSrc[3],
+	int srcStep[3], uint8_t* pDst, int dstStep, int width, int height)
 {
-	UINT32 x;
-	UINT32 dstPad;
-	UINT32 srcPad[3];
-	UINT32 fullWidth;
-	UINT32 fullHeight;
-	UINT32 halfWidth;
-	UINT32 halfHeight;
-	const BYTE* pY;
-	const BYTE* pCo;
-	const BYTE* pCg;
+	uint32_t x;
+	uint32_t dstPad;
+	uint32_t srcPad[3];
+	uint32_t fullWidth;
+	uint32_t fullHeight;
+	uint32_t halfWidth;
+	uint32_t halfHeight;
+	const uint8_t* pY;
+	const uint8_t* pCo;
+	const uint8_t* pCg;
 	int R[4];
 	int G[4];
 	int B[4];
 	int Y[4];
 	int Co, Cg, t[4];
-	BYTE* pRGB = pDst;
+	uint8_t* pRGB = pDst;
 	__m128i xmm0, xmm1, xmm2, xmm3, xmm4, xmm5, xmm6, xmm7, col, coh, cgl, cgh;
 
 	pY = pSrc[0];
@@ -180,7 +181,7 @@ void NowColor_YCoCgR420ToRGB_8u_P3AC4R_simd(const BYTE* pSrc[3],
 			/* 2nd pixel */
 			Y[1] = pY[1];
 
-			pY = (BYTE*) (((BYTE*) pY) + srcStep[0]);
+			pY = (uint8_t*) (((uint8_t*) pY) + srcStep[0]);
 
 			/* 3rd pixel */
 			Y[2] = pY[0];
@@ -188,7 +189,7 @@ void NowColor_YCoCgR420ToRGB_8u_P3AC4R_simd(const BYTE* pSrc[3],
 			/* 4th pixel */
 			Y[3] = pY[1];
 
-			pY = (BYTE*) (((BYTE*) pY) - srcStep[0] + 2);
+			pY = (uint8_t*) (((uint8_t*) pY) - srcStep[0] + 2);
 
 			t[0] = Y[0] - (Cg >> 1);
 			G[0] = Cg + t[0];
@@ -223,29 +224,29 @@ void NowColor_YCoCgR420ToRGB_8u_P3AC4R_simd(const BYTE* pSrc[3],
 			CLAMP(B[3], 0, 255);
 
 			/* 1st pixel */
-			pRGB[0] = (BYTE) B[0];
-			pRGB[1] = (BYTE) G[0];
-			pRGB[2] = (BYTE) R[0];
+			pRGB[0] = (uint8_t) B[0];
+			pRGB[1] = (uint8_t) G[0];
+			pRGB[2] = (uint8_t) R[0];
 			pRGB[3] = 0xFF;
 
 			/* 2nd pixel */
-			pRGB[4] = (BYTE) B[1];
-			pRGB[5] = (BYTE) G[1];
-			pRGB[6] = (BYTE) R[1];
+			pRGB[4] = (uint8_t) B[1];
+			pRGB[5] = (uint8_t) G[1];
+			pRGB[6] = (uint8_t) R[1];
 			pRGB[7] = 0xFF;
 
 			pRGB += dstStep;
 
 			/* 3rd pixel */
-			pRGB[0] = (BYTE) B[2];
-			pRGB[1] = (BYTE) G[2];
-			pRGB[2] = (BYTE) R[2];
+			pRGB[0] = (uint8_t) B[2];
+			pRGB[1] = (uint8_t) G[2];
+			pRGB[2] = (uint8_t) R[2];
 			pRGB[3] = 0xFF;
 
 			/* 4th pixel */
-			pRGB[4] = (BYTE) B[3];
-			pRGB[5] = (BYTE) G[3];
-			pRGB[6] = (BYTE) R[3];
+			pRGB[4] = (uint8_t) B[3];
+			pRGB[5] = (uint8_t) G[3];
+			pRGB[6] = (uint8_t) R[3];
 			pRGB[7] = 0xFF;
 
 			pRGB = pRGB - dstStep + 8;
@@ -253,9 +254,9 @@ void NowColor_YCoCgR420ToRGB_8u_P3AC4R_simd(const BYTE* pSrc[3],
 			x -= 2;
 		}
 
-		pY = (BYTE*) (((BYTE*) pY) + srcPad[0] + srcStep[0]);
-		pCo = (BYTE*) (((BYTE*) pCo) + srcPad[1]);
-		pCg = (BYTE*) (((BYTE*) pCg) + srcPad[2]);
+		pY = (uint8_t*) (((uint8_t*) pY) + srcPad[0] + srcStep[0]);
+		pCo = (uint8_t*) (((uint8_t*) pCo) + srcPad[1]);
+		pCg = (uint8_t*) (((uint8_t*) pCg) + srcPad[2]);
 		pRGB = pRGB + dstPad + dstStep;
 	}
 }
@@ -339,19 +340,19 @@ void NowColor_YCoCgR420ToRGB_8u_P3AC4R_simd(const BYTE* pSrc[3],
 	_mm_storeu_si128((__m128i *)(pY), xmm4);  \
 }
 
-void NowColor_RGBToYCoCgR420_8u_P3AC4R_simd(const BYTE* pSrc, INT32 srcStep,
-	BYTE* pDst[3], INT32 dstStep[3], int width, int height)
+void NowColor_RGBToYCoCgR420_8u_P3AC4R_simd(const uint8_t* pSrc, int32_t srcStep,
+	uint8_t* pDst[3], int32_t dstStep[3], int width, int height)
 {
-	UINT32 x;
-	UINT32 srcPad;
-	UINT32 dstPad[3];
-	UINT32 fullWidth;
-	UINT32 fullHeight;
-	UINT32 halfWidth;
-	UINT32 halfHeight;
-	BYTE* pY;
-	BYTE* pCo;
-	BYTE* pCg;
+	uint32_t x;
+	uint32_t srcPad;
+	uint32_t dstPad[3];
+	uint32_t fullWidth;
+	uint32_t fullHeight;
+	uint32_t halfWidth;
+	uint32_t halfHeight;
+	uint8_t* pY;
+	uint8_t* pCo;
+	uint8_t* pCg;
 	int R[4];
 	int G[4];
 	int B[4];
@@ -360,7 +361,7 @@ void NowColor_RGBToYCoCgR420_8u_P3AC4R_simd(const BYTE* pSrc, INT32 srcStep,
 	int Cg[4];
 	int t[4];
 	int sCo, sCg;
-	const BYTE* pRGB = pSrc;
+	const uint8_t* pRGB = pSrc;
 	__m128i xmm0, xmm1, xmm2, xmm3, xmm4, xmm5, xmm6, xmm7;
 	__m128i cosum0, cosum1, cgsum0, cgsum1;
 
@@ -461,20 +462,20 @@ void NowColor_RGBToYCoCgR420_8u_P3AC4R_simd(const BYTE* pSrc, INT32 srcStep,
 			sCg = (Cg[0] + Cg[1] + Cg[2] + Cg[3] + 1024) >> 3;
 
 			/* 1st pixel */
-			pY[0] = (BYTE) Y[0];
-			*pCo++ = (BYTE) sCo;
-			*pCg++ = (BYTE) sCg;
+			pY[0] = (uint8_t) Y[0];
+			*pCo++ = (uint8_t) sCo;
+			*pCg++ = (uint8_t) sCg;
 
 			/* 2nd pixel */
-			pY[1] = (BYTE) Y[1];
+			pY[1] = (uint8_t) Y[1];
 
 			pY = pY + dstStep[0];
 
 			/* 3rd pixel */
-			pY[0] = (BYTE) Y[2];
+			pY[0] = (uint8_t) Y[2];
 
 			/* 4th pixel */
-			pY[1] = (BYTE) Y[3];
+			pY[1] = (uint8_t) Y[3];
 
 			pY = pY - dstStep[0] + 2;
 

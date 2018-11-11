@@ -1,6 +1,5 @@
 
-#include <Wayk/Now.h>
-#include <Wayk/NowProto.h>
+#include <xpp/codec.h>
 
 #define WAYK_SIMD_INTERNAL
 #include "simd.h"
@@ -410,8 +409,8 @@ int NowCodec_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
 	d0 = vpmin_u32(d0, d0);  \
 	if (vget_lane_u32(d0, 0) != 0xFFFFFFFF)  \
 	{  \
-		rowEqual = FALSE;  \
-		cols[x / 16] = FALSE;  \
+		rowEqual = false;  \
+		cols[x / 16] = false;  \
 		if (l > x)  \
 			l = x;  \
 		if (r < x)  \
@@ -420,10 +419,10 @@ int NowCodec_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
 }
 
 int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
-	int width, int height, NOW_EDGE_RECT* rect)
+	int width, int height, DUC_EDGE_RECT* rect)
 {
-	BOOL allEqual;
-	BOOL rowEqual;
+	bool allEqual;
+	bool rowEqual;
 	int th;
 	int x, y, k;
 	int width16 = (width & ~0xF);
@@ -431,11 +430,11 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	int remainder2 = step2 - width * 4;
 	int l, t, r, b;
 	BYTE *p1 = pData1, *p2 = pData2;
-	BOOL cols[1024];
+	bool cols[1024];
 	uint32x4_t q0, q1, q2, q3, q4, q5, q6, q7, q8;
 	uint32x2_t d0;
 
-	allEqual = TRUE;
+	allEqual = true;
 
 	l = width + 1;
 	r = -1;
@@ -449,7 +448,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 
 		for (y = 0; y < height; y += 16)
 		{
-			rowEqual = TRUE;
+			rowEqual = true;
 
 			th = min(height - y, 16);
 
@@ -468,8 +467,8 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 				{
 					if (memcmp(p1, p2, (width - x) * 4) != 0)
 					{
-						rowEqual = FALSE;
-						cols[x / 16] = FALSE;
+						rowEqual = false;
+						cols[x / 16] = false;
 
 						if (l > x)
 							l = x;
@@ -485,7 +484,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 
 			if (!rowEqual)
 			{
-				allEqual = FALSE;
+				allEqual = false;
 
 				if (t > y)
 					t = y;
@@ -499,7 +498,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	{
 		for (y = 0; y < height; y += 16)
 		{
-			rowEqual = TRUE;
+			rowEqual = true;
 
 			th = min(height - y, 16);
 
@@ -520,7 +519,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 
 			if (!rowEqual)
 			{
-				allEqual = FALSE;
+				allEqual = false;
 
 				if (t > y)
 					t = y;
@@ -584,7 +583,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	d0 = vpmin_u32(d0, d0);  \
 	if (vget_lane_u32(d0, 0) != 0xFFFFFFFF)  \
 	{  \
-		equal = FALSE;  \
+		equal = false;  \
 		break;  \
 	}  \
 }
@@ -606,7 +605,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	d0 = vpmin_u32(d0, d0);  \
 	if (vget_lane_u32(d0, 0) != 0xFFFFFFFF)  \
 	{  \
-		equal = FALSE;  \
+		equal = false;  \
 		break;  \
 	}  \
 }
@@ -624,18 +623,18 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	d0 = vpmin_u32(d0, d0);  \
 	if (vget_lane_u32(d0, 0) != 0xFFFFFFFF)  \
 	{  \
-		equal = FALSE;  \
+		equal = false;  \
 		break;  \
 	}  \
 }
 
 
 int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
-	int width, int height, NOW_EDGE_RECT* rect)
+	int width, int height, DUC_EDGE_RECT* rect)
 {
-	BOOL equal;
-	BOOL allEqual;
-	BOOL rowEqual;
+	bool equal;
+	bool allEqual;
+	bool rowEqual;
 	int tw, th;
 	int x, y, k;
 	int l, t, r, b;
@@ -643,7 +642,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	uint32x4_t q0, q1, q2, q3, q4, q5, q6, q7, q8;
 	uint32x2_t d0;
 
-	allEqual = TRUE;
+	allEqual = true;
 
 	l = width + 1;
 	r = -1;
@@ -652,13 +651,13 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 
 	for (y = 0; y < height; y += 16)
 	{
-		rowEqual = TRUE;
+		rowEqual = true;
 
 		th = min(height - y, 16);
 
 		for (x = 0; x < width; x += 16)
 		{
-			equal = TRUE;
+			equal = true;
 
 			tw = min(width - x, 16);
 
@@ -701,7 +700,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 				{
 					if (memcmp(p1, p2, tw * 4) != 0)
 					{
-						equal = FALSE;
+						equal = false;
 						break;
 					}
 
@@ -712,7 +711,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 
 			if (!equal)
 			{
-				rowEqual = FALSE;
+				rowEqual = false;
 
 				if (l > x)
 					l = x;
@@ -724,7 +723,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 
 		if (!rowEqual)
 		{
-			allEqual = FALSE;
+			allEqual = false;
 
 			if (t > y)
 				t = y;
@@ -786,7 +785,7 @@ int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 #if !defined(__APPLE__) || !defined(__aarch64__)
 
 int NowCodec_Compare8_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
-	int width, int height, NOW_EDGE_RECT* rect)
+	int width, int height, DUC_EDGE_RECT* rect)
 {
 	int x, y;
 	int width16 = (width & ~0xF);

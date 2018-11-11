@@ -1,9 +1,9 @@
 #ifndef WAYK_CODEC_SIMD_H
 #define WAYK_CODEC_SIMD_H
 
-#include <Wayk/Now.h>
-#include <Wayk/NowMath.h>
-#include <Wayk/NowProto.h>
+#include <xpp/xpp.h>
+#include <xpp/math.h>
+#include <xpp/color.h>
 
 #define SIMD_NONE	0
 #define SIMD_SSE2	1
@@ -31,16 +31,16 @@ unsigned int override_simd(unsigned int simd);
 
 #else
 
-int NowCodec_Copy_simd(BYTE* pDstData, int nDstStep, int nXDst, int nYDst,
-	int nWidth, int nHeight, BYTE* pSrcData, int nSrcStep, int nXSrc, int nYSrc);
+int NowCodec_Copy_simd(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst,
+	int nWidth, int nHeight, uint8_t* pSrcData, int nSrcStep, int nXSrc, int nYSrc);
 
 #endif
 
-int NowCodec_Move_simd(BYTE* pData, int nStep, int nXDst, int nYDst,
+int NowCodec_Move_simd(uint8_t* pData, int nStep, int nXDst, int nYDst,
 	int nWidth, int nHeight, int nXSrc, int nYSrc);
 
-int NowCodec_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
-	int nYDst, int nWidth, int nHeight, BYTE* pSrcData, int nSrcStep, int nXSrc,
+int NowCodec_CopyFromRetina_simd(uint8_t* pDstData, int nDstStep, int nXDst,
+	int nYDst, int nWidth, int nHeight, uint8_t* pSrcData, int nSrcStep, int nXSrc,
 	int nYSrc);
 
 #if !defined(LINEAR_COMPARE32) && (defined(__arm__) || defined(__aarch64__)) && defined(__ANDROID__)
@@ -49,30 +49,30 @@ int NowCodec_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
 
 #else
 
-int NowCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
-	int width, int height, NOW_EDGE_RECT* rect);
+int NowCodec_Compare32_simd(uint8_t* pData1, int step1, uint8_t* pData2, int step2,
+	int width, int height, DUC_EDGE_RECT* rect);
 
 #endif
 
 #if defined(__aarch64__) && defined(__APPLE__)
 
-/* Our optimized UINT32 C Compare8 algorithm is faster than NEON when using
+/* Our optimized uint32_t C Compare8 algorithm is faster than NEON when using
    64-bit code on iOS devices. */
 
 #define NowCodec_Compare8_simd NowCodec_Compare8_c
 
 #else
 
-int NowCodec_Compare8_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
-	int width, int height, NOW_EDGE_RECT* rect);
+int NowCodec_Compare8_simd(uint8_t* pData1, int step1, uint8_t* pData2, int step2,
+	int width, int height, DUC_EDGE_RECT* rect);
 
 #endif
 
-void NowColor_YCoCgR420ToRGB_8u_P3AC4R_simd(const BYTE* pSrc[3],
-	int srcStep[3], BYTE* pDst, int dstStep, int width, int height);
+void NowColor_YCoCgR420ToRGB_8u_P3AC4R_simd(const uint8_t* pSrc[3],
+	int srcStep[3], uint8_t* pDst, int dstStep, int width, int height);
 
-void NowColor_RGBToYCoCgR420_8u_P3AC4R_simd(const BYTE* pSrc, INT32 srcStep,
-	BYTE* pDst[3], INT32 dstStep[3], int width, int height);
+void NowColor_RGBToYCoCgR420_8u_P3AC4R_simd(const uint8_t* pSrc, int32_t srcStep,
+	uint8_t* pDst[3], int32_t dstStep[3], int width, int height);
 
 #endif
 

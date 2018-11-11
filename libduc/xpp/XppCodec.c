@@ -7,11 +7,6 @@
 #include <xpp/codec.h>
 #include <xpp/prim.h>
 
-#define XMD_H
-#define HAVE_JPEG_INT_TYPES
-#include <jpeglib.h>
-#include <turbojpeg.h>
-
 #ifdef WITH_CODEC_SIMD
 #include "simd/simd.h"
 #endif
@@ -41,7 +36,7 @@ void codec_setup_u32_buffer_t(buffer_t* buffer, uint32_t* data, int width, int h
 	buffer->host = (uint8_t*)data;
 	buffer->stride[0] = 1;
 	buffer->stride[1] = stride;
-	buffer->host_dirty = TRUE;
+	buffer->host_dirty = true;
 }
 
 void codec_setup_1d_u32_buffer_t(buffer_t* buffer, uint32_t* data, int width)
@@ -52,7 +47,7 @@ void codec_setup_1d_u32_buffer_t(buffer_t* buffer, uint32_t* data, int width)
 	buffer->elem_size = 4;
 	buffer->host = (uint8_t*)data;
 	buffer->stride[0] = 1;
-	buffer->host_dirty = TRUE;
+	buffer->host_dirty = true;
 }
 
 void codec_setup_u8_buffer_t(buffer_t* buffer, uint8_t* data, int width, int height, int stride)
@@ -65,7 +60,7 @@ void codec_setup_u8_buffer_t(buffer_t* buffer, uint8_t* data, int width, int hei
 	buffer->host = data;
 	buffer->stride[0] = 1;
 	buffer->stride[1] = stride;
-	buffer->host_dirty = TRUE;
+	buffer->host_dirty = true;
 }
 
 void codec_setup_1d_u8_buffer_t(buffer_t* buffer, uint8_t* data, int width)
@@ -76,7 +71,7 @@ void codec_setup_1d_u8_buffer_t(buffer_t* buffer, uint8_t* data, int width)
 	buffer->elem_size = 1;
 	buffer->host = data;
 	buffer->stride[0] = 1;
-	buffer->host_dirty = TRUE;
+	buffer->host_dirty = true;
 }
 
 int NowCodec_Copy_halide(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst,
@@ -96,7 +91,7 @@ int NowCodec_Copy_halide(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst,
 }
 
 int NowCodec_Compare32_halide(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
-			      NOW_EDGE_RECT* rect)
+			      DUC_EDGE_RECT* rect)
 {
 	int i;
 
@@ -137,7 +132,7 @@ int NowCodec_Compare32_halide(uint8_t* pData1, int step1, uint8_t* pData2, int s
 }
 
 int NowCodec_Compare8_halide(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
-			     NOW_EDGE_RECT* rect)
+			     DUC_EDGE_RECT* rect)
 {
 	int i;
 
@@ -298,7 +293,7 @@ int NowCodec_CopyFromRetina(uint8_t* pDstData, int nDstStep, int nXDst, int nYDs
 }
 
 int NowCodec_Compare32_c(uint8_t* pData1, int step1, uint8_t* pData2,
-	int step2, int width, int height, NOW_EDGE_RECT* rect)
+	int step2, int width, int height, DUC_EDGE_RECT* rect)
 {
 	bool equal;
 	bool allEqual;
@@ -405,14 +400,14 @@ int NowCodec_Compare32_c(uint8_t* pData1, int step1, uint8_t* pData2,
 }
 
 int NowCodec_Compare32(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
-		       NOW_EDGE_RECT* rect)
+		       DUC_EDGE_RECT* rect)
 {
 	NowPrimitives* primitives = NowPrimitives_Get();
 	return primitives->Compare32(pData1, step1, pData2, step2, width, height, rect);
 }
 
 int NowCodec_Compare8_c(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
-			NOW_EDGE_RECT* rect)
+			DUC_EDGE_RECT* rect)
 {
 	int x, y;
 	int width4 = (width & ~0x3);
@@ -521,14 +516,14 @@ int NowCodec_Compare8_c(uint8_t* pData1, int step1, uint8_t* pData2, int step2, 
 }
 
 int NowCodec_Compare8(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
-		      NOW_EDGE_RECT* rect)
+		      DUC_EDGE_RECT* rect)
 {
 	NowPrimitives* primitives = NowPrimitives_Get();
 	return primitives->Compare8(pData1, step1, pData2, step2, width, height, rect);
 }
 
 int NowCodec_Compare(uint8_t* pData1, int nStep1, int nWidth, int nHeight, uint8_t* pData2, int nStep2,
-		     NOW_EDGE_RECT* rect)
+		     DUC_EDGE_RECT* rect)
 {
 	return NowCodec_Compare32(pData1, nStep1, pData2, nStep2, nWidth, nHeight, rect);
 }

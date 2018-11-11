@@ -43,7 +43,7 @@ void setup_rgb_buffer_t(buffer_t* buffer, uint8_t* data, int width, int height, 
 	buffer->stride[0] = 1;
 	buffer->stride[1] = 4;
 	buffer->stride[2] = stride;
-	buffer->host_dirty = TRUE;
+	buffer->host_dirty = true;
 }
 
 void setup_ycocg_buffer_t(buffer_t* buffer, uint8_t* data, int width, int height, int stride)
@@ -56,7 +56,7 @@ void setup_ycocg_buffer_t(buffer_t* buffer, uint8_t* data, int width, int height
 	buffer->host = data;
 	buffer->stride[0] = 1;
 	buffer->stride[1] = stride;
-	buffer->host_dirty = TRUE;
+	buffer->host_dirty = true;
 }
 
 void NowColor_Halide_RGBToYCoCgR420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3],
