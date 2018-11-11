@@ -3,7 +3,7 @@
 #include <xpp/codec.h>
 #include <xpp/color.h>
 
-#ifdef WITH_CODEC_SIMD
+#ifdef WITH_SIMD
 #include "simd/simd.h"
 #endif
 
@@ -34,7 +34,7 @@ bool XppPrimitives_Init(XppPrimitives* primitives, uint32_t flags)
 		result = true;
 	}
 
-#ifdef WITH_CODEC_SIMD
+#ifdef WITH_SIMD
 	if (flags & XPP_PRIMITIVES_SIMD)
 	{
 		primitives->Compare32 = XppCodec_Compare32_simd;
@@ -68,7 +68,7 @@ XppPrimitives* XppPrimitives_Get()
 		XppPrimitives_Init(&g_Primitives, XPP_PRIMITIVES_ALL);
 
 #ifdef WITH_HALIDE
-#ifdef WITH_CODEC_SIMD
+#ifdef WITH_SIMD
 	g_Primitives.Compare32 = XppCodec_Compare32_simd;
 	g_Primitives.Compare8 = XppCodec_Compare8_simd;
 #else

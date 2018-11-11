@@ -7,7 +7,7 @@
 #include <xpp/codec.h>
 #include <xpp/prim.h>
 
-#ifdef WITH_CODEC_SIMD
+#ifdef WITH_SIMD
 #include "simd/simd.h"
 #endif
 
@@ -21,8 +21,6 @@
 #include <halide/Compare8Stage1.h>
 #include <HalideRuntime.h>
 #endif
-
-#define TAG "XppCodec"
 
 #ifdef WITH_HALIDE
 

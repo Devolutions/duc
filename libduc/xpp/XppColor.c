@@ -11,7 +11,7 @@
 #include <HalideRuntime.h>
 #endif
 
-#ifdef WITH_CODEC_SIMD
+#ifdef WITH_SIMD
 #include "simd/simd.h"
 #endif
 
@@ -93,7 +93,7 @@ void XppColor_Halide_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcSte
 
 #endif
 
-#ifdef WITH_CODEC_SIMD
+#ifdef WITH_SIMD
 
 void XppColor_SSE2_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep,
 					    int width, int height)

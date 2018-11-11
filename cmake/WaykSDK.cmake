@@ -96,12 +96,6 @@ if(NOT EXISTS ${WAYK_HOME})
 	message(FATAL_ERROR "The WAYK_HOME (${WAYK_HOME}) could not be found.")
 endif()
 
-# Find FreeRDP
-
-if(EXISTS "${WAYK_HOME}/dev/FreeRDP")
-	set(WAYK_FREERDP "${WAYK_HOME}/dev/FreeRDP")
-endif()
-
 # Configure SDK and platform variables
 
 set(WAYK_SDK "${WAYK_HOME}/sdk")
@@ -122,7 +116,6 @@ if(WAYK_PLATFORM STREQUAL Windows)
 	else()
 		set(WAYK_ARCH "x86")
 	endif()
-	list(APPEND WAYK_SDK_PACKAGES "deviare")
 elseif(WAYK_PLATFORM STREQUAL macOS)
 	set(WAYK_ARCH_UNIBIN 1)
 elseif(WAYK_PLATFORM STREQUAL Linux)
@@ -139,7 +132,6 @@ elseif(WAYK_PLATFORM STREQUAL UWP)
 
 endif()
 
-list(APPEND WAYK_SDK_PACKAGES "libuv")
 list(APPEND WAYK_SDK_PACKAGES "libyuv")
 list(APPEND WAYK_SDK_PACKAGES "libpng")
 list(APPEND WAYK_SDK_PACKAGES "zlib")
@@ -147,12 +139,6 @@ list(APPEND WAYK_SDK_PACKAGES "zlib")
 list(APPEND WAYK_SDK_PACKAGES "cares")
 list(APPEND WAYK_SDK_PACKAGES "curl")
 list(APPEND WAYK_SDK_PACKAGES "nng")
-list(APPEND WAYK_SDK_PACKAGES "lizard")
-
-list(APPEND WAYK_SDK_PACKAGES "fuzzer")
-
-list(APPEND WAYK_SDK_PACKAGES "winpr")
-list(APPEND WAYK_SDK_PACKAGES "freerdp")
 
 # Add SDK tools to the program path
 
@@ -195,8 +181,4 @@ endif()
 
 set(HALIDE_INCLUDE_DIR "${HALIDE_PREFIX}/include")
 set(HALIDE_LIBRARY_DIR "${HALIDE_PREFIX}/lib")
-
-# print summary
-
-message(STATUS "Wayk SDK: ${WAYK_PLATFORM} ${WAYK_ARCH}")
 
