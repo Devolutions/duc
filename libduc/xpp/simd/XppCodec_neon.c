@@ -113,12 +113,12 @@
 
 #if !defined(__ANDROID__)
 
-int Xpp_Copy_simd(BYTE* pDstData, int nDstStep, int nXDst, int nYDst,
-	int nWidth, int nHeight, BYTE* pSrcData, int nSrcStep, int nXSrc, int nYSrc)
+int Xpp_Copy_simd(uint8_t* pDstData, int nDstStep, int nXDst, int nYDst,
+	int nWidth, int nHeight, uint8_t* pSrcData, int nSrcStep, int nXSrc, int nYSrc)
 {
 	int x;
-	BYTE* pSrcPixel;
-	BYTE* pDstPixel;
+	uint8_t* pSrcPixel;
+	uint8_t* pDstPixel;
 	int nSrcRemainder;
 	int nDstRemainder;
 	uint32x4_t q0, q1, q2, q3, q4, q5, q6, q7;
@@ -256,12 +256,12 @@ int Xpp_Copy_simd(BYTE* pDstData, int nDstStep, int nXDst, int nYDst,
 	}  \
 }
 
-int Xpp_Move_simd(BYTE* pData, int nStep, int nXDst, int nYDst,
+int Xpp_Move_simd(uint8_t* pData, int nStep, int nXDst, int nYDst,
 	int nWidth, int nHeight, int nXSrc, int nYSrc)
 {
 	int x;
-	BYTE* pSrcPixel;
-	BYTE* pDstPixel;
+	uint8_t* pSrcPixel;
+	uint8_t* pDstPixel;
 	int nRemainder;
 	uint32x4_t q0, q1, q2, q3, q4, q5, q6, q7;
 
@@ -319,16 +319,16 @@ int Xpp_Move_simd(BYTE* pData, int nStep, int nXDst, int nYDst,
 	sumh = vaddq_u16(sumh, srcoh);  \
 }
 
-int Xpp_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
-	int nYDst, int nWidth, int nHeight, BYTE* pSrcData, int nSrcStep, int nXSrc,
+int Xpp_CopyFromRetina_simd(uint8_t* pDstData, int nDstStep, int nXDst,
+	int nYDst, int nWidth, int nHeight, uint8_t* pSrcData, int nSrcStep, int nXSrc,
 	int nYSrc)
 {
 	int x;
 	int nSrcPad;
 	int nDstPad;
 	uint32_t R, G, B;
-	BYTE* pSrcPixel;
-	BYTE* pDstPixel;
+	uint8_t* pSrcPixel;
+	uint8_t* pDstPixel;
 	uint32x4_t src0, src1;
 	uint32x4x2_t srceo;
 	uint16x8_t srcel, srcol, srceh, srcoh, suml, sumh;
@@ -373,9 +373,9 @@ int Xpp_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
 			R = pSrcPixel[2] + pSrcPixel[6] + pSrcPixel[nSrcStep + 2] + pSrcPixel[nSrcStep + 6];
 			pSrcPixel += 8;
 
-			*pDstPixel++ = (BYTE) (B >> 2);
-			*pDstPixel++ = (BYTE) (G >> 2);
-			*pDstPixel++ = (BYTE) (R >> 2);
+			*pDstPixel++ = (uint8_t) (B >> 2);
+			*pDstPixel++ = (uint8_t) (G >> 2);
+			*pDstPixel++ = (uint8_t) (R >> 2);
 			*pDstPixel++ = 0xFF;
 		}
 
@@ -418,7 +418,7 @@ int Xpp_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
 	}  \
 }
 
-int Xpp_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
+int Xpp_Compare32_simd(uint8_t* pData1, int step1, uint8_t* pData2, int step2,
 	int width, int height, DUC_EDGE_RECT* rect)
 {
 	bool allEqual;
@@ -429,7 +429,7 @@ int Xpp_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	int remainder1 = step1 - width * 4;
 	int remainder2 = step2 - width * 4;
 	int l, t, r, b;
-	BYTE *p1 = pData1, *p2 = pData2;
+	uint8_t *p1 = pData1, *p2 = pData2;
 	bool cols[1024];
 	uint32x4_t q0, q1, q2, q3, q4, q5, q6, q7, q8;
 	uint32x2_t d0;
@@ -629,7 +629,7 @@ int Xpp_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 }
 
 
-int Xpp_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
+int Xpp_Compare32_simd(uint8_t* pData1, int step1, uint8_t* pData2, int step2,
 	int width, int height, DUC_EDGE_RECT* rect)
 {
 	bool equal;
@@ -638,7 +638,7 @@ int Xpp_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	int tw, th;
 	int x, y, k;
 	int l, t, r, b;
-	BYTE *p1, *p2;
+	uint8_t *p1, *p2;
 	uint32x4_t q0, q1, q2, q3, q4, q5, q6, q7, q8;
 	uint32x2_t d0;
 
@@ -784,14 +784,14 @@ int Xpp_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 
 #if !defined(__APPLE__) || !defined(__aarch64__)
 
-int Xpp_Compare8_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
+int Xpp_Compare8_simd(uint8_t* pData1, int step1, uint8_t* pData2, int step2,
 	int width, int height, DUC_EDGE_RECT* rect)
 {
 	int x, y;
 	int width16 = (width & ~0xF);
 	int l, r, t, b;
-	BYTE* p1 = pData1;
-	BYTE* p2 = pData2;
+	uint8_t* p1 = pData1;
+	uint8_t* p2 = pData2;
 	uint32_t cmp[4];
 	uint32x4_t q0, q1, q2;
 
