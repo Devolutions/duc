@@ -15,6 +15,9 @@ set(${MODULE_PREFIX}_SOURCES
 
 if(WITH_HALIDE)
 	add_subdirectory(halide)
+	add_definitions(-DWITH_HALIDE)
+	include_directories("${HALIDE_INCLUDE_DIR}")
+	include_directories("${CMAKE_BINARY_DIR}/generated")
 	list(APPEND ${MODULE_PREFIX}_HEADERS ${HALIDE_GENERATED_HEADERS})
 	list(APPEND ${MODULE_PREFIX}_SOURCES ${HALIDE_GENERATED_OBJECTS})
 	set_source_files_properties(${HALIDE_GENERATED_HEADERS} PROPERTIES GENERATED TRUE)

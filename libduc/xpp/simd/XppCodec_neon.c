@@ -113,7 +113,7 @@
 
 #if !defined(__ANDROID__)
 
-int XppCodec_Copy_simd(BYTE* pDstData, int nDstStep, int nXDst, int nYDst,
+int Xpp_Copy_simd(BYTE* pDstData, int nDstStep, int nXDst, int nYDst,
 	int nWidth, int nHeight, BYTE* pSrcData, int nSrcStep, int nXSrc, int nYSrc)
 {
 	int x;
@@ -256,7 +256,7 @@ int XppCodec_Copy_simd(BYTE* pDstData, int nDstStep, int nXDst, int nYDst,
 	}  \
 }
 
-int XppCodec_Move_simd(BYTE* pData, int nStep, int nXDst, int nYDst,
+int Xpp_Move_simd(BYTE* pData, int nStep, int nXDst, int nYDst,
 	int nWidth, int nHeight, int nXSrc, int nYSrc)
 {
 	int x;
@@ -319,7 +319,7 @@ int XppCodec_Move_simd(BYTE* pData, int nStep, int nXDst, int nYDst,
 	sumh = vaddq_u16(sumh, srcoh);  \
 }
 
-int XppCodec_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
+int Xpp_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
 	int nYDst, int nWidth, int nHeight, BYTE* pSrcData, int nSrcStep, int nXSrc,
 	int nYSrc)
 {
@@ -418,7 +418,7 @@ int XppCodec_CopyFromRetina_simd(BYTE* pDstData, int nDstStep, int nXDst,
 	}  \
 }
 
-int XppCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
+int Xpp_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	int width, int height, DUC_EDGE_RECT* rect)
 {
 	bool allEqual;
@@ -629,7 +629,7 @@ int XppCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 }
 
 
-int XppCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
+int Xpp_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	int width, int height, DUC_EDGE_RECT* rect)
 {
 	bool equal;
@@ -784,7 +784,7 @@ int XppCodec_Compare32_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 
 #if !defined(__APPLE__) || !defined(__aarch64__)
 
-int XppCodec_Compare8_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
+int Xpp_Compare8_simd(BYTE* pData1, int step1, BYTE* pData2, int step2,
 	int width, int height, DUC_EDGE_RECT* rect)
 {
 	int x, y;

@@ -33,7 +33,7 @@
 
 void setup_rgb_buffer_t(buffer_t* buffer, uint8_t* data, int width, int height, int stride)
 {
-	ZeroMemory(buffer, sizeof(buffer_t));
+	memset(buffer, 0, sizeof(buffer_t));
 	
 	buffer->extent[0] = 4;
 	buffer->extent[1] = width;
@@ -48,7 +48,7 @@ void setup_rgb_buffer_t(buffer_t* buffer, uint8_t* data, int width, int height, 
 
 void setup_ycocg_buffer_t(buffer_t* buffer, uint8_t* data, int width, int height, int stride)
 {
-	ZeroMemory(buffer, sizeof(buffer_t));
+	memset(buffer, 0, sizeof(buffer_t));
 	
 	buffer->extent[0] = width;
 	buffer->extent[1] = height;
@@ -59,7 +59,7 @@ void setup_ycocg_buffer_t(buffer_t* buffer, uint8_t* data, int width, int height
 	buffer->host_dirty = true;
 }
 
-void XppColor_Halide_RGBToYCoCgR420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3],
+void Xpp_Halide_RGBToYCoCgR420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3],
 					      int32_t dstStep[3], int width, int height)
 {
 	buffer_t inRgb;
@@ -75,7 +75,7 @@ void XppColor_Halide_RGBToYCoCgR420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcSt
 	RgbToYCoCgR420_old_buffer_t(&inRgb, &outY, &outCo, &outCg);
 }
 
-void XppColor_Halide_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep,
+void Xpp_Halide_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep,
 					      int width, int height)
 {
 	buffer_t outRgb;
@@ -95,15 +95,15 @@ void XppColor_Halide_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcSte
 
 #ifdef WITH_SIMD
 
-void XppColor_SSE2_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep,
+void Xpp_SSE2_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep,
 					    int width, int height)
 {
-	XppColor_YCoCgR420ToRGB_8u_P3AC4R_simd(pSrc, srcStep, pDst, dstStep, width, height);
+	Xpp_YCoCgR420ToRGB_8u_P3AC4R_simd(pSrc, srcStep, pDst, dstStep, width, height);
 }
 
 #endif
 
-void XppColor_YUV420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
+void Xpp_YUV420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
 				    int height)
 {
 	int x, y;
@@ -329,7 +329,7 @@ void XppColor_YUV420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint
 	}
 }
 
-void XppColor_RGBToYUV420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
+void Xpp_RGBToYUV420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
 				    int width, int height)
 {
 	int x, y;
@@ -428,7 +428,7 @@ void XppColor_RGBToYUV420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_
 	}
 }
 
-void XppColor_YCoCgR420ToRGB_8u_P3AC4R_c(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
+void Xpp_YCoCgR420ToRGB_8u_P3AC4R_c(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
 					 int height)
 {
 	uint32_t x, y;
@@ -553,7 +553,7 @@ void XppColor_YCoCgR420ToRGB_8u_P3AC4R_c(const uint8_t* pSrc[3], int srcStep[3],
 	}
 }
 
-void XppColor_RGBToYCoCgR420_8u_P3AC4R_c(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
+void Xpp_RGBToYCoCgR420_8u_P3AC4R_c(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
 					 int width, int height)
 {
 	uint32_t x, y;
@@ -668,21 +668,21 @@ void XppColor_RGBToYCoCgR420_8u_P3AC4R_c(const uint8_t* pSrc, int32_t srcStep, u
 	}
 }
 
-void XppColor_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
+void Xpp_YCoCgR420ToRGB_8u_P3AC4R(const uint8_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
 				       int height)
 {
 	XppPrimitives* primitives = XppPrimitives_Get();
 	primitives->YCoCgR420ToRGB_8u_P3AC4R(pSrc, srcStep, pDst, dstStep, width, height);
 }
 
-void XppColor_RGBToYCoCgR420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
+void Xpp_RGBToYCoCgR420_8u_P3AC4R(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
 				       int width, int height)
 {
 	XppPrimitives* primitives = XppPrimitives_Get();
 	primitives->RGBToYCoCgR420_8u_P3AC4R(pSrc, srcStep, pDst, dstStep, width, height);
 }
 
-void XppColor_RGBToYCoCgR420_8u_P3AC4R_ds2x(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
+void Xpp_RGBToYCoCgR420_8u_P3AC4R_ds2x(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst[3], int32_t dstStep[3],
 					    int width, int height)
 {
 	uint32_t x, y;
@@ -823,7 +823,7 @@ void XppColor_RGBToYCoCgR420_8u_P3AC4R_ds2x(const uint8_t* pSrc, int32_t srcStep
 
 /* YCoCgR */
 
-void XppColor_YCoCgRToRGB_16s_P3AC4R(const int16_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
+void Xpp_YCoCgRToRGB_16s_P3AC4R(const int16_t* pSrc[3], int srcStep[3], uint8_t* pDst, int dstStep, int width,
 				     int height)
 {
 	int x, y;
@@ -948,7 +948,7 @@ void XppColor_YCoCgRToRGB_16s_P3AC4R(const int16_t* pSrc[3], int srcStep[3], uin
 	}
 }
 
-void XppColor_RGBToYCoCgR_16s_P3AC4R(const uint8_t* pSrc, int32_t srcStep, int16_t* pDst[3], int32_t dstStep[3],
+void Xpp_RGBToYCoCgR_16s_P3AC4R(const uint8_t* pSrc, int32_t srcStep, int16_t* pDst[3], int32_t dstStep[3],
 				     int width, int height)
 {
 	int x, y;
@@ -1069,7 +1069,7 @@ void XppColor_RGBToYCoCgR_16s_P3AC4R(const uint8_t* pSrc, int32_t srcStep, int16
 	}
 }
 
-void XppColor_MultiplyAlpha(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst, int32_t dstStep, int width, int height)
+void Xpp_MultiplyAlpha(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst, int32_t dstStep, int width, int height)
 {
 	int x, y;
 	int srcPad;
@@ -1096,7 +1096,7 @@ void XppColor_MultiplyAlpha(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst,
 	}
 }
 
-void XppColor_UnmultiplyAlpha(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst, int32_t dstStep, int width,
+void Xpp_UnmultiplyAlpha(const uint8_t* pSrc, int32_t srcStep, uint8_t* pDst, int32_t dstStep, int width,
 			      int height)
 {
 	int x, y;

@@ -68,7 +68,7 @@ static void codec_setup_1d_u8_buffer_t(buffer_t* buffer, uint8_t* data, int widt
 	buffer->host_dirty = true;
 }
 
-int XppCodec_Compare32_halide(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
+int Xpp_Compare32_halide(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
 			      DUC_EDGE_RECT* rect)
 {
 	int i;
@@ -109,7 +109,7 @@ int XppCodec_Compare32_halide(uint8_t* pData1, int step1, uint8_t* pData2, int s
 	return 0;
 }
 
-int XppCodec_Compare8_halide(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
+int Xpp_Compare8_halide(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
 			     DUC_EDGE_RECT* rect)
 {
 	int i;
@@ -152,7 +152,7 @@ int XppCodec_Compare8_halide(uint8_t* pData1, int step1, uint8_t* pData2, int st
 
 #endif
 
-int XppCodec_Compare32_c(uint8_t* pData1, int step1, uint8_t* pData2,
+int Xpp_Compare32_c(uint8_t* pData1, int step1, uint8_t* pData2,
 	int step2, int width, int height, DUC_EDGE_RECT* rect)
 {
 	bool equal;
@@ -259,14 +259,14 @@ int XppCodec_Compare32_c(uint8_t* pData1, int step1, uint8_t* pData2,
 	return 1;
 }
 
-int XppCodec_Compare32(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
+int Xpp_Compare32(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
 		       DUC_EDGE_RECT* rect)
 {
 	XppPrimitives* primitives = XppPrimitives_Get();
 	return primitives->Compare32(pData1, step1, pData2, step2, width, height, rect);
 }
 
-int XppCodec_Compare8_c(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
+int Xpp_Compare8_c(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
 			DUC_EDGE_RECT* rect)
 {
 	int x, y;
@@ -375,15 +375,15 @@ int XppCodec_Compare8_c(uint8_t* pData1, int step1, uint8_t* pData2, int step2, 
 	return 1;
 }
 
-int XppCodec_Compare8(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
+int Xpp_Compare8(uint8_t* pData1, int step1, uint8_t* pData2, int step2, int width, int height,
 		      DUC_EDGE_RECT* rect)
 {
 	XppPrimitives* primitives = XppPrimitives_Get();
 	return primitives->Compare8(pData1, step1, pData2, step2, width, height, rect);
 }
 
-int XppCodec_Compare(uint8_t* pData1, int nStep1, int nWidth, int nHeight, uint8_t* pData2, int nStep2,
+int Xpp_Compare(uint8_t* pData1, int nStep1, int nWidth, int nHeight, uint8_t* pData2, int nStep2,
 		     DUC_EDGE_RECT* rect)
 {
-	return XppCodec_Compare32(pData1, nStep1, pData2, nStep2, nWidth, nHeight, rect);
+	return Xpp_Compare32(pData1, nStep1, pData2, nStep2, nWidth, nHeight, rect);
 }

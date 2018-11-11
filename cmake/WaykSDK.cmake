@@ -157,18 +157,18 @@ endforeach()
 # find LLVM
 
 if(WAYK_HOST STREQUAL Windows)
-	set(WAYK_LLVM_PREFIX "${WAYK_SDK_HOST}/x86/llvm")
+	set(HALIDE_LLVM_PREFIX "${WAYK_SDK_HOST}/x86/llvm")
 elseif(WAYK_HOST STREQUAL macOS)
-	set(WAYK_LLVM_PREFIX "${WAYK_SDK_HOST}/llvm")
+	set(HALIDE_LLVM_PREFIX "${WAYK_SDK_HOST}/llvm")
 elseif(WAYK_HOST STREQUAL Linux)
-	set(WAYK_LLVM_PREFIX "${WAYK_SDK_HOST}/${WAYK_HOST_ARCH}/llvm")
+	set(HALIDE_LLVM_PREFIX "${WAYK_SDK_HOST}/${WAYK_HOST_ARCH}/llvm")
 endif()
 
-if(EXISTS "${WAYK_LLVM_PREFIX}")
-	set(WAYK_LLVM_FOUND 1)
-	message(STATUS "Using LLVM: ${WAYK_LLVM_PREFIX}")
+if(EXISTS "${HALIDE_LLVM_PREFIX}")
+	set(HALIDE_LLVM_FOUND 1)
+	message(STATUS "Using LLVM: ${HALIDE_LLVM_PREFIX}")
 else()
-	message(WARNING "LLVM could not be found at ${WAYK_LLVM_PREFIX}")
+	message(WARNING "LLVM could not be found at ${HALIDE_LLVM_PREFIX}")
 endif()
 
 # find Halide
