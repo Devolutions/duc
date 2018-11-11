@@ -7,8 +7,9 @@ include_directories(include)
 set(${MODULE_PREFIX}_HEADERS "")
 
 set(${MODULE_PREFIX}_SOURCES
-	XppCodec.c
 	XppColor.c
+	XppCopy.c
+	XppDiff.c
 	XppScale.c
 	XppPrim.c)
 
