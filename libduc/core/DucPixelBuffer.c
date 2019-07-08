@@ -37,7 +37,7 @@ uint8_t* Duc_GetImagePointer(uint8_t* pRegion, int16_t x, int16_t y, uint16_t st
 
 size_t Duc_GetPlaneSize(uint16_t step, uint16_t vstep)
 {
-	return step * vstep;
+	return (size_t) step * vstep;
 }
 
 size_t Duc_GetPlaneSizes(uint16_t step[4], uint16_t vstep[4], size_t planeSize[4])
@@ -47,10 +47,10 @@ size_t Duc_GetPlaneSizes(uint16_t step[4], uint16_t vstep[4], size_t planeSize[4
 	if (!planeSize)
 		planeSize = totalSize;
 
-	planeSize[0] = step[0] * vstep[0];
-	planeSize[1] = step[1] * vstep[1];
-	planeSize[2] = step[2] * vstep[2];
-	planeSize[3] = step[3] * vstep[3];
+	planeSize[0] = (size_t) step[0] * vstep[0];
+	planeSize[1] = (size_t) step[1] * vstep[1];
+	planeSize[2] = (size_t) step[2] * vstep[2];
+	planeSize[3] = (size_t) step[3] * vstep[3];
 	totalSize[4] = planeSize[0] + planeSize[1] + planeSize[2] + planeSize[3];
 
 	return totalSize[4];
